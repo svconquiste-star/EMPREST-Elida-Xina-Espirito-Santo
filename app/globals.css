@@ -1,13 +1,13 @@
 :root {
-  --bg-base: #E9E8E7;
-  --bg-card: #ffffff;
-  --border: rgba(250, 142, 0, 0.18);
-  --brand: #FA8E00;
-  --brand-dark: #e07e00;
-  --gold: #F7B04B;
-  --text: #1e1e1e;
-  --muted: rgba(30, 30, 30, 0.5);
-  --error: #f87171;
+  --bg-base: #0a0a0a;
+  --bg-card: #1a1a1a;
+  --border: rgba(255, 255, 255, 0.12);
+  --brand: #ffffff;
+  --brand-dark: #e0e0e0;
+  --gold: #ffffff;
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.6);
+  --error: #ff6b6b;
   --font-sans: 'Outfit', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-serif: 'Merriweather', Georgia, serif;
 }
@@ -20,8 +20,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background: radial-gradient(900px 600px at 50% 0%, rgba(250, 142, 0, 0.07), transparent 60%),
-    var(--bg-base);
+  background: var(--bg-base);
   color: var(--text);
   font-family: var(--font-sans);
 }
@@ -65,8 +64,8 @@ button {
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  border: 1px solid rgba(247, 176, 75, 0.35);
-  background: rgba(247, 176, 75, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   color: var(--brand);
   font-weight: 600;
@@ -115,7 +114,7 @@ button {
   width: 100%;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(255, 255, 255, 0.08);
   color: var(--text);
   padding: 13px 14px;
   outline: none;
@@ -124,8 +123,8 @@ button {
 }
 
 .input:focus {
-  border-color: rgba(250, 142, 0, 0.5);
-  box-shadow: 0 0 0 4px rgba(250, 142, 0, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
 }
 
 .input-error {
@@ -165,18 +164,18 @@ button {
   letter-spacing: 0.02em;
   cursor: pointer;
   background: linear-gradient(180deg, var(--brand), var(--brand-dark));
-  color: #ffffff;
+  color: #000000;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 4px 20px rgba(250, 142, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
   transition: transform 0.15s, box-shadow 0.15s;
 }
 
 .btn-whatsapp:hover:not([disabled]) {
   transform: translateY(-1px);
-  box-shadow: 0 6px 28px rgba(250, 142, 0, 0.45);
+  box-shadow: 0 6px 28px rgba(255, 255, 255, 0.3);
 }
 
 .btn-whatsapp:active:not([disabled]) {
