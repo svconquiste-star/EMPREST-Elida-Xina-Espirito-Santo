@@ -18,6 +18,8 @@ model Contact {
   deviceType      String?   @db.VarChar(50)
   operatingSystem String?   @db.VarChar(50)
 
+  whatsappLink    String?   @db.Text
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   ipAddress       String?   @db.VarChar(45)

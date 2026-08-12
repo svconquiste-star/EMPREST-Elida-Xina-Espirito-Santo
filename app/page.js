@@ -74,6 +74,7 @@ export default function Page() {
       telefone: phoneDigits,
       email: email.trim() || undefined,
       cidade: cidade.trim(),
+      whatsappLink: link,
     });
   };
 
