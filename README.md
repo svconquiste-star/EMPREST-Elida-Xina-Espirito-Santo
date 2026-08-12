@@ -42,7 +42,7 @@ app/
   providers.js       - Providers de contexto
   globals.css        - Estilos globais
 lib/
-  tracking.js        - TrackingManager (Pixel + N8N)
+  tracking.js        - TrackingManager (Pixel tracking)
   phoneValidator.js  - Validação de telefone
 context/
   CityContext.js     - Provider de cidades
