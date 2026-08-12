@@ -9,7 +9,7 @@ export default function Page() {
   const tracking = useTracking();
   const { buildLink } = useWhatsApp();
 
-  const [nomeEmpresa, setNomeEmpresa] = useState('');
+  const nomeEmpresa = 'XINA-ESPIRITO-SANTO'; // Fixo e oculto
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
   const [email, setEmail] = useState('');
@@ -26,7 +26,6 @@ export default function Page() {
   }, [email]);
 
   const canSubmit = Boolean(
-    nomeEmpresa.trim().length > 1 &&
     nome.trim().length > 1 &&
     phoneResult.valid &&
     emailValid &&
@@ -39,7 +38,6 @@ export default function Page() {
 
   const onSubmit = () => {
     const newErrors = {};
-    if (!nomeEmpresa.trim()) newErrors.nomeEmpresa = 'Nome da empresa é obrigatório';
     if (!nome.trim()) newErrors.nome = 'Nome é obrigatório';
     if (!phoneResult.valid) newErrors.telefone = phoneResult.error || 'Telefone inválido';
     if (email && !emailValid) newErrors.email = 'Email inválido';
@@ -107,21 +105,6 @@ export default function Page() {
         <p className="subtitle">Preencha seus dados e receba uma resposta rápida, com atendimento humano e sigiloso.</p>
 
         <div className="form" role="form" aria-label="Formulário de contato">
-          <div className="form-group">
-            <label className="label" htmlFor="nomeEmpresa">
-              Nome da Empresa *
-            </label>
-            <input
-              id="nomeEmpresa"
-              className={`input ${errors.nomeEmpresa ? 'input-error' : ''}`}
-              value={nomeEmpresa}
-              onChange={(e) => setNomeEmpresa(e.target.value)}
-              placeholder="Nome da sua empresa"
-              autoComplete="organization"
-            />
-            {errors.nomeEmpresa && <span className="error-message">{errors.nomeEmpresa}</span>}
-          </div>
-
           <div className="form-group">
             <label className="label" htmlFor="nome">
               Nome *
