@@ -25,6 +25,7 @@ model Contact {
   ipAddress       String?   @db.VarChar(45)
   userAgent       String?   @db.Text
 
+  @@map("Contact_Xina-ES")
   @@index([telefone])
   @@index([email])
   @@index([createdAt])
