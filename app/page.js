@@ -11,6 +11,7 @@ export default function Page() {
 
   const nomeEmpresa = 'XINA-ESPIRITO-SANTO'; // Fixo e oculto
   const [nome, setNome] = useState('');
+  const [cargo, setCargo] = useState('');
   const [telefone, setTelefone] = useState('');
   const [email, setEmail] = useState('');
   const [cidade, setCidade] = useState('');
@@ -27,6 +28,7 @@ export default function Page() {
 
   const canSubmit = Boolean(
     nome.trim().length > 1 &&
+    cargo.trim().length > 1 &&
     phoneResult.valid &&
     emailValid &&
     cidade.trim().length > 1
@@ -39,6 +41,7 @@ export default function Page() {
   const onSubmit = () => {
     const newErrors = {};
     if (!nome.trim()) newErrors.nome = 'Nome é obrigatório';
+    if (!cargo.trim()) newErrors.cargo = 'Cargo/Função é obrigatório';
     if (!phoneResult.valid) newErrors.telefone = phoneResult.error || 'Telefone inválido';
     if (email && !emailValid) newErrors.email = 'Email inválido';
     if (!cidade.trim()) newErrors.cidade = 'Cidade é obrigatória';
@@ -53,6 +56,7 @@ export default function Page() {
     // 1. Abrir WhatsApp IMEDIATAMENTE
     const link = buildLink({
       nome: nome.trim(),
+      cargo: cargo.trim(),
       cidade: cidade.trim(),
       telefone: phoneDisplay || phoneDigits,
     });
@@ -71,6 +75,7 @@ export default function Page() {
     saveContactAsync({
       nomeEmpresa: nomeEmpresa.trim(),
       nome: nome.trim(),
+      cargo: cargo.trim(),
       telefone: phoneDigits,
       email: email.trim() || undefined,
       cidade: cidade.trim(),
@@ -119,6 +124,21 @@ export default function Page() {
               autoComplete="name"
             />
             {errors.nome && <span className="error-message">{errors.nome}</span>}
+          </div>
+
+          <div className="form-group">
+            <label className="label" htmlFor="cargo">
+              Cargo/Função/Ocupação *
+            </label>
+            <input
+              id="cargo"
+              className={`input ${errors.cargo ? 'input-error' : ''}`}
+              value={cargo}
+              onChange={(e) => setCargo(e.target.value)}
+              placeholder="Ex: Barbeiro, Eletricista, Vendedor"
+              autoComplete="off"
+            />
+            {errors.cargo && <span className="error-message">{errors.cargo}</span>}
           </div>
 
           <div className="form-group">

@@ -11,6 +11,7 @@ model Contact {
   id              String    @id @default(cuid())
   nomeEmpresa     String    @db.VarChar(255)
   nome            String    @db.VarChar(255)
+  cargo           String    @db.VarChar(255)
   telefone        String    @db.VarChar(20)
   email           String?   @db.VarChar(255)
   cidade          String    @db.VarChar(255)
