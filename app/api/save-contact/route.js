@@ -22,7 +22,7 @@ export async function POST(request) {
 
   } catch (error) {
     // Validation errors
-    if (error.name === 'ZodError') {
+    if (error.name === 'ZodError' && error.errors) {
       return NextResponse.json(
         {
           error: 'Dados inválidos',
@@ -38,7 +38,7 @@ export async function POST(request) {
     // Generic errors
     console.error('[API /save-contact] Error:', error);
     return NextResponse.json(
-      { error: 'Erro ao salvar dados' },
+      { error: error.message || 'Erro ao salvar dados' },
       { status: 500 }
     );
   }
