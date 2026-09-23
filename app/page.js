@@ -27,6 +27,7 @@ export default function Page() {
   // UI State
   const [currentStep, setCurrentStep] = useState(1);
   const [errors, setErrors] = useState({});
+  const [cltRejected, setCltRejected] = useState(false);
 
   // Validações Step 1
   const phoneDigits = useMemo(() => String(telefone || '').replace(/\D/g, ''), [telefone]);
@@ -110,33 +111,7 @@ export default function Page() {
 
     setErrors({});
 
-    // 1. Construir link WhatsApp com TODOS os dados
-    const link = buildLink({
-      nome: nome.trim(),
-      cargo: cargo.trim(),
-      tipoVinculo,
-      cidade: cidade.trim(),
-      telefone: phoneDisplay || phoneDigits,
-      rendaMensal: rendaMensalNum,
-      valorDesejado: valorDesejadoNum,
-      nomeEmpresa2: tipoVinculo === 'PJ' ? nomeEmpresa2.trim() : undefined,
-    });
-
-    // 2. Abrir WhatsApp imediatamente
-    window.open(link, '_blank', 'noopener,noreferrer');
-
-    // 3. Track Pixel (SÓ se PJ - feito no tracking.js com condicional)
-    tracking.trackContact({
-      nome: nome.trim(),
-      telefone: phoneDigits,
-      email: email.trim() || undefined,
-      cidade: cidade.trim(),
-      tipoVinculo,
-      valorDesejado: valorDesejadoNum,
-    });
-
-    // 4. Background: Salvar em BD
-    saveContactAsync({
+    const contactBase = {
       nomeEmpresa: nomeEmpresa.trim(),
       nome: nome.trim(),
       cargo: cargo.trim(),
@@ -147,8 +122,43 @@ export default function Page() {
       rendaMensal: String(rendaMensalNum),
       valorDesejado: String(valorDesejadoNum),
       nomeEmpresa2: tipoVinculo === 'PJ' ? nomeEmpresa2.trim() : '',
-      whatsappLink: link,
+    };
+
+    // ❌ CLT: Bloquear e salvar apenas para controle interno
+    if (tipoVinculo === 'CLT') {
+      saveContactAsync(contactBase);
+      setCltRejected(true);
+      return;
+    }
+
+    // ✅ PJ: Fluxo normal
+    const link = buildLink({
+      nome: nome.trim(),
+      cargo: cargo.trim(),
+      tipoVinculo,
+      cidade: cidade.trim(),
+      telefone: phoneDisplay || phoneDigits,
+      rendaMensal: rendaMensalNum,
+      valorDesejado: valorDesejadoNum,
+      nomeEmpresa2: nomeEmpresa2.trim(),
     });
+
+    window.open(link, '_blank', 'noopener,noreferrer');
+
+    tracking.trackContact({
+      nome: nome.trim(),
+      telefone: phoneDigits,
+      email: email.trim() || undefined,
+      cidade: cidade.trim(),
+      tipoVinculo,
+      valorDesejado: valorDesejadoNum,
+    });
+
+    saveContactAsync({ ...contactBase, whatsappLink: link });
+  };
+
+  const handleCltRejectedBack = () => {
+    setCltRejected(false);
   };
 
   const saveContactAsync = async (data) => {
@@ -266,7 +276,20 @@ export default function Page() {
             </>
           )}
 
-          {currentStep === 2 && (
+          {currentStep === 2 && cltRejected && (
+            <div className="reject-message">
+              <i className="fa-solid fa-circle-info" style={{ color: 'var(--brand)', fontSize: '28px' }}></i>
+              <p className="reject-title">No momento, atendemos apenas autônomos e empresas (PJ)</p>
+              <p className="subtitle">
+                Assim que abrirmos vagas para quem trabalha de carteira assinada (CLT), avisaremos por aqui. Obrigado pelo interesse!
+              </p>
+              <button className="btn-secondary" type="button" onClick={handleCltRejectedBack}>
+                Voltar
+              </button>
+            </div>
+          )}
+
+          {currentStep === 2 && !cltRejected && (
             <>
               {/* STEP 2: QUALIFICAÇÃO */}
               <div className="form-group">
