@@ -16,6 +16,7 @@ model Contact {
   rendaMensal     Decimal   @db.Decimal(12, 2)
   valorDesejado   Decimal   @db.Decimal(12, 2)
   nomeEmpresa2    String?   @db.VarChar(255)    // Nome da empresa (PJ apenas)
+  motivo          String?   @db.VarChar(255)
   telefone        String    @db.VarChar(20)
   email           String?   @db.VarChar(255)
   cidade          String    @db.VarChar(255)

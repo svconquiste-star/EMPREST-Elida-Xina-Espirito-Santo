@@ -19,9 +19,11 @@ export function WhatsAppProvider({ children }) {
     rendaMensal,
     valorDesejado,
     nomeEmpresa2,
+    motivo,
   }) => {
     const n = nome ? nome.trim() : '[NOME]';
     const cg = cargo ? cargo.trim() : '[CARGO]';
+    const mt = motivo ? motivo.trim() : '[MOTIVO]';
     const tv = tipoVinculo || 'CLT';
     const c = cidade ? cidade.trim() : '[CIDADE]';
     const t = telefone || '[TELEFONE]';
@@ -34,7 +36,7 @@ export function WhatsAppProvider({ children }) {
     }
 
     const message =
-      `Olá! Sou ${n}, sou ${cg}${empresaPart} e moro em ${c}. ` +
+      `Olá! Sou ${n}, sou ${cg}${empresaPart} motivo ${mt} e moro em ${c}. ` +
       `Trabalho como ${tv === 'CLT' ? 'CLT' : 'PJ'}. ` +
       `Minha renda mensal é de ${rm} e gostaria de um valor de ${vd}. ` +
       `Meu telefone é ${t}.`;

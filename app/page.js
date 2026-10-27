@@ -23,6 +23,7 @@ export default function Page() {
   const [rendaMensal, setRendaMensal] = useState('');
   const [valorDesejado, setValorDesejado] = useState('');
   const [nomeEmpresa2, setNomeEmpresa2] = useState('');
+  const [motivo, setMotivo] = useState('');
 
   // UI State
   const [currentStep, setCurrentStep] = useState(1);
@@ -67,6 +68,7 @@ export default function Page() {
     cargo.trim().length > 1 &&
     rendaMensalNum > 0 &&
     valorDesejadoNum > 0 &&
+    motivo.trim().length > 1 &&
     (tipoVinculo === 'CLT' || (tipoVinculo === 'PJ' && nomeEmpresa2.trim().length > 1))
   );
 
@@ -103,6 +105,7 @@ export default function Page() {
     if (tipoVinculo === 'PJ' && !nomeEmpresa2.trim()) {
       newErrors.nomeEmpresa2 = 'Nome da empresa é obrigatório para PJ';
     }
+    if (!motivo.trim()) newErrors.motivo = 'Motivo é obrigatório';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -112,6 +115,7 @@ export default function Page() {
     setErrors({});
 
     const contactBase = {
+      motivo: motivo.trim(),
       nomeEmpresa: nomeEmpresa.trim(),
       nome: nome.trim(),
       cargo: cargo.trim(),
@@ -141,6 +145,7 @@ export default function Page() {
       rendaMensal: rendaMensalNum,
       valorDesejado: valorDesejadoNum,
       nomeEmpresa2: nomeEmpresa2.trim(),
+      motivo: motivo.trim(),
     });
 
     window.open(link, '_blank', 'noopener,noreferrer');
@@ -376,6 +381,21 @@ export default function Page() {
                   {errors.nomeEmpresa2 && <span className="error-message">{errors.nomeEmpresa2}</span>}
                 </div>
               )}
+
+              <div className="form-group">
+                <label className="label" htmlFor="motivo">
+                  Motivo *
+                </label>
+                <input
+                  id="motivo"
+                  className={`input ${errors.motivo ? 'input-error' : ''}`}
+                  value={motivo}
+                  onChange={(e) => setMotivo(e.target.value)}
+                  placeholder="Ex: Reformar a Loja"
+                  autoComplete="off"
+                />
+                {errors.motivo && <span className="error-message">{errors.motivo}</span>}
+              </div>
 
               <div className="cta">
                 <div style={{ display: 'flex', gap: '10px' }}>
